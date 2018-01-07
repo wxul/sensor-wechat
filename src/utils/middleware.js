@@ -63,7 +63,11 @@ exports.xml2json = function(xmlStr) {
     return obj;
 };
 
-const { my } = require('../../config/index');
+const config = require('../../app_config');
+
+var { my } = config[
+    process.env.NODE_ENV === 'production' ? 'production' : 'dev'
+];
 
 exports.middleware = (req, res, next) => {
     res.success = data => {
