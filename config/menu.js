@@ -11,9 +11,12 @@ module.exports = {
             key: 'take_photo'
         },
         {
-            type: 'click',
             name: '浇水',
-            key: 'take_water'
+            sub_button: {
+                type: 'click',
+                name: '确定浇水',
+                key: 'take_water'
+            }
         }
     ]
 };

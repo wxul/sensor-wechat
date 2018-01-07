@@ -77,6 +77,7 @@ exports.middleware = (req, res, next) => {
         var xml = {
             xml: d
         };
+        console.log('response:', xml);
         res.end(this.json2xml(xml));
     };
 
