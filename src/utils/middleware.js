@@ -70,7 +70,7 @@ exports.middleware = (req, res, next) => {
         var d = Object.assign(
             {
                 FromUserName: my,
-                CreateTime: +new Date()
+                CreateTime: ~~(+new Date() / 1000)
             },
             data
         );
