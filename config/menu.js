@@ -6,9 +6,9 @@ module.exports = {
             url: 'http://sensor.home.amayading.com'
         },
         {
-            type: 'click',
-            name: '查看图片',
-            key: 'take_photo'
+            type: 'view',
+            name: '看看直播',
+            url: 'http://sensor.home.amayading.com/live'
         },
         {
             name: '浇水',
