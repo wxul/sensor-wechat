@@ -28,9 +28,9 @@ module.exports = {
     },
     // 转换实时天气
     parseNow(obj) {
-        return `实时天气: ${obj.cond_txt}, 温度 ${obj.tmp}℃, 体感温度 ${
+        return `实时: ${obj.cond_txt}, 温度 ${obj.tmp}℃, 体感温度 ${
             obj.fl
-        }℃, 风向 ${obj.wind_dir}, 风力 ${obj.wind_sc}, 相对湿度 ${
+        }℃, 风向 ${obj.wind_dir}, 风力 ${obj.wind_sc}, 湿度 ${
             obj.hum
         }%, 能见度 ${obj.vis}km\r\n`;
     },
@@ -43,13 +43,11 @@ module.exports = {
         str += `更新时间: ${update.loc}\r\n`;
         str += `未来 ${arr.length} 天的天气预报: \r\n`;
         arr.forEach(a => {
-            str += `${a.date}: 白天 ${a.cond_txt_d}, 晚间 ${
-                a.cond_txt_n
-            }, 最高温度 ${a.tmp_max}℃, 最低温度 ${a.tmp_min}℃, 风向 ${
-                a.wind_dir
-            }, 风力 ${a.wind_sc}, 相对湿度 ${a.hum}%, 日出 ${a.sr}, 日落 ${
-                a.ss
-            }\r\n`;
+            str += `${a.date.substr(5)}: 白天 ${a.cond_txt_d}, 夜间 ${a.cond_txt_n}, ${
+                a.tmp_max
+            }℃ - ${a.tmp_min}℃, 风向 ${a.wind_dir}, 风力 ${a.wind_sc}, 湿度 ${
+                a.hum
+            }%, 日出 ${a.sr}-${a.ss}\r\n`;
         });
         return str;
     },
@@ -88,7 +86,7 @@ module.exports = {
     parseWeather(obj) {
         var s = this.parseForecast(obj.basic, obj.update, obj.daily_forecast);
         s += this.parseNow(obj.now);
-        // s += this.parseLifestyle(obj.lifestyle);
+        s += this.parseLifestyle(obj.lifestyle);
         s += '\r\n';
         return s;
     }

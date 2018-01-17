@@ -17,7 +17,17 @@ function parseWeather(location, openId, res) {
                 } else {
                     w = w.filter(e => e.status == 'ok');
                     var s = '';
-                    s += weather.parseWeather(w[0]);
+                    if (w.length == 1) {
+                        s = weather.parseWeather(w[0]);
+                    } else {
+                        s += `查询返回多个结果, 请使用cid区分地区: \r\n`;
+                        w.forEach(e => {
+                            var basic = e.basic;
+                            s += `cid:${basic.cid} : ${basic.cnty} ${
+                                basic.admin_area
+                            } ${basic.parent_city} ${basic.location}\r\n`;
+                        });
+                    }
                     // w.forEach(e => {
                     //     s += weather.parseWeather(e);
                     // });
