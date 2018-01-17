@@ -41,6 +41,7 @@ app.get('/cloud-picture2', (req, res) => {
                     rawData += chunk;
                 });
                 response.on('end', () => {
+                    console.log('end!', rawData.length);
                     res.end(new Buffer(rawData, 'binary'));
                 });
             }
