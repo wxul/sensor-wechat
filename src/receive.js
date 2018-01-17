@@ -7,18 +7,23 @@ function parseWeather(location, openId, res) {
             console.log(result.data);
             var data = result.data;
             if (data && data.HeWeather6 && data.HeWeather6.length) {
-                let w = data.HeWeather6[0];
-                if (w.status == 'ok') {
+                let w = data.HeWeather6;
+                if (w.length == 1 && w[0].status != 'ok') {
                     res.success({
                         ToUserName: openId,
                         MsgType: 'text',
-                        Content: weather.parseNow(w.now)
+                        Content: w[0].status
                     });
                 } else {
+                    w = w.filter(e => e.status == 'ok');
+                    var s = '';
+                    w.forEach(e => {
+                        s += weather.parseWeather(e);
+                    });
                     res.success({
                         ToUserName: openId,
                         MsgType: 'text',
-                        Content: w.status
+                        Content: s
                     });
                 }
             } else {
