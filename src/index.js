@@ -20,6 +20,10 @@ app.get('/', (req, res) => {
     res.end('hello!');
 });
 
+app.get('/cloud-picture', (req, res) => {
+    res.redirect(util.getCurrentCloudPicture());
+});
+
 // EncodingAESKey: fRiNddHo08W0H8Z3e7UdiEv5Kqodlhmve98EUQsPau1
 
 app.get('/api', function(req, res) {

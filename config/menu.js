@@ -19,9 +19,9 @@ module.exports = {
                     key: '天气:深圳'
                 },
                 {
-                    type: 'click',
+                    type: 'view',
                     name: '实时卫星云图',
-                    key: 'cloud_picture'
+                    url: 'http://wechat.amayading.com/cloud-picture'
                 }
             ]
         },
