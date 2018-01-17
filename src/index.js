@@ -36,15 +36,18 @@ app.get('/cloud-picture2', (req, res) => {
             response => {
                 console.log('状态码：', response.statusCode);
                 console.log('请求头：', response.headers);
-                var rawData = '';
+                var rawData = [];
+                var size = 0;
                 response.on('data', chunk => {
-                    rawData += chunk;
+                    rawData.push(chunk);
+                    size += chunk.length;
                 });
                 response.on('end', () => {
-                    console.log('end!', rawData.length);
+                    console.log('end!', rawData.length, size);
                     // res.end(new Buffer(rawData, 'binary'));
+                    var buff = Buffer.concat(datas, size);
                     res.setHeader('Content-Type', 'image/jpeg');
-                    res.write(rawData, 'binary');
+                    res.write(buff, 'binary');
                     res.end();
                 });
             }
