@@ -35,7 +35,7 @@ module.exports = {
         }%, 能见度 ${obj.vis}km\r\n`;
     },
     // 转换天气预报
-    parseForecast(basic, updata, arr) {
+    parseForecast(basic, update, arr) {
         var str = '';
         str += `查询城市: ${basic.cnty} ${basic.admin_area} ${
             basic.parent_city
