@@ -24,7 +24,7 @@ module.exports = {
     },
     // 转换实时天气
     parseNow(obj) {
-        return `实时: ${obj.cond_txt}, 温度 ${obj.tmp}℃, 体感温度 ${
+        return `实时: \r\n${obj.cond_txt}, 温度 ${obj.tmp}℃, 体感温度 ${
             obj.fl
         }℃, 风向 ${obj.wind_dir}, 风力 ${obj.wind_sc}, 湿度 ${
             obj.hum
