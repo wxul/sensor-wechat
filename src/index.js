@@ -69,7 +69,7 @@ app.post('/api', function(req, res) {
                         weather
                             .getWeather(location)
                             .then(result => {
-                                console.log(result.status);
+                                console.log(result);
                                 var data = result.data;
                                 if (data.status == 'ok') {
                                     res.success({
