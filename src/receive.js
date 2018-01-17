@@ -1,6 +1,6 @@
 const weather = require('./utils/weather');
 
-function parseWeather(location, res) {
+function parseWeather(location, openId, res) {
     weather
         .getWeather(location)
         .then(result => {
@@ -43,7 +43,7 @@ module.exports = (req, res) => {
             if (xml.Content.indexOf('天气:') >= 0) {
                 let location = xml.Content.replace('天气:', '');
                 console.log('location:', location);
-                parseWeather(location, res);
+                parseWeather(location, openId, res);
             } else if (xml.Content.indexOf('空气:') >= 0) {
                 let location = xml.Content.replace('空气:', '');
             } else {
@@ -61,7 +61,7 @@ module.exports = (req, res) => {
                     if (xml.EventKey.indexOf('天气:') >= 0) {
                         let location = xml.EventKey.replace('天气:', '');
                         console.log('location:', location);
-                        parseWeather(location, res);
+                        parseWeather(location, openId, res);
                     } else if (xml.EventKey.indexOf('空气:') >= 0) {
                         let location = xml.EventKey.replace('空气:', '');
                     }
