@@ -88,7 +88,7 @@ module.exports = {
     parseWeather(obj) {
         var s = this.parseForecast(obj.basic, obj.update, obj.daily_forecast);
         s += this.parseNow(obj.now);
-        s += this.parseLifestyle(obj.lifestyle);
+        // s += this.parseLifestyle(obj.lifestyle);
         s += '\r\n';
         return s;
     }
