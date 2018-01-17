@@ -42,7 +42,8 @@ app.get('/cloud-picture2', (req, res) => {
                 });
                 response.on('end', () => {
                     console.log('end!', rawData.length);
-                    res.end(new Buffer(rawData, 'binary'));
+                    // res.end(new Buffer(rawData, 'binary'));
+                    res.write(rawData, 'binary');
                 });
             }
         )
