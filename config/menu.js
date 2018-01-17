@@ -26,7 +26,7 @@ module.exports = {
                 {
                     type: 'view',
                     name: '卫星云图',
-                    url: 'http://wechat.amayading.com/cloud-picture'
+                    url: 'http://wechat.amayading.com/cloud-picture2'
                 }
             ]
         },

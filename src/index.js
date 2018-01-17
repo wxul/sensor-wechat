@@ -25,6 +25,28 @@ app.get('/cloud-picture', (req, res) => {
     res.redirect(util.getCurrentCloudPicture());
 });
 
+const { he_key } = require('../app_config');
+
+app.get('/cloud-picture2', (req, res) => {
+    http.get(
+        `https://api.heweather.com/s6/map/cloudmap?key=${he_key}`,
+        sres => {
+            if (sres.statusCode !== 200) {
+                // throw error
+            }
+            var rawData = '';
+            sres.setEncodeng('binary');
+            sres.on('data', chunk => {
+                rawData += chunk;
+            });
+            sres.on('end', () => {
+                // callback here
+                res.end(new Buffer(rawData, 'binary'));
+            });
+        }
+    );
+});
+
 // EncodingAESKey: fRiNddHo08W0H8Z3e7UdiEv5Kqodlhmve98EUQsPau1
 
 app.get('/api', function(req, res) {
