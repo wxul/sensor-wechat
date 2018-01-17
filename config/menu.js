@@ -16,11 +16,11 @@ module.exports = {
                 {
                     type: 'click',
                     name: '天气预报',
-                    key: '天气:深圳'
+                    key: '天气:南山'
                 },
                 {
                     type: 'view',
-                    name: '实时卫星云图',
+                    name: '卫星云图',
                     url: 'http://wechat.amayading.com/cloud-picture'
                 }
             ]
