@@ -26,25 +26,20 @@ app.get('/cloud-picture', (req, res) => {
 });
 
 const { he_key } = require('../app_config');
+const axios = require('axios');
 
 app.get('/cloud-picture2', (req, res) => {
-    http.get(
-        `https://api.heweather.com/s6/map/cloudmap?key=${he_key}`,
-        sres => {
-            if (sres.statusCode !== 200) {
-                // throw error
+    axios
+        .get(`https://api.heweather.com/s6/map/cloudmap`, {
+            params: {
+                key: he_key
             }
-            var rawData = '';
-            sres.setEncodeng('binary');
-            sres.on('data', chunk => {
-                rawData += chunk;
-            });
-            sres.on('end', () => {
-                // callback here
-                res.end(new Buffer(rawData, 'binary'));
-            });
-        }
-    );
+        })
+        .then(result => {
+            console.log(result);
+            console.log(result.data);
+            res.end(result);
+        });
 });
 
 // EncodingAESKey: fRiNddHo08W0H8Z3e7UdiEv5Kqodlhmve98EUQsPau1
