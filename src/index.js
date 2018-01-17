@@ -27,18 +27,27 @@ app.get('/cloud-picture', (req, res) => {
 
 const { he_key } = require('../app_config');
 const axios = require('axios');
+const https = require('https');
 
 app.get('/cloud-picture2', (req, res) => {
-    axios
-        .get(`https://api.heweather.com/s6/map/cloudmap`, {
-            params: {
-                key: he_key
+    https
+        .get(
+            `https://api.heweather.com/s6/map/cloudmap?key=${he_key}`,
+            response => {
+                console.log('状态码：', response.statusCode);
+                console.log('请求头：', response.headers);
+                var rawData = '';
+                response.on('data', chunk => {
+                    rawData += chunk;
+                });
+                response.on('end', () => {
+                    res.end(new Buffer(rawData, 'binary'));
+                });
             }
-        })
-        .then(result => {
-            console.log(result);
-            console.log(result.data);
-            res.end(result);
+        )
+        .on('error', err => {
+            console.log(err);
+            res.end(err);
         });
 });
 
