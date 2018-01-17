@@ -50,6 +50,40 @@ function parseWeather(location, openId, res) {
         });
 }
 
+function parseAir(location, openId, res) {
+    weather
+        .getAir(location)
+        .then(result => {
+            console.log(result.data);
+            var data = result.data;
+            if (data && data.HeWeather6 && data.HeWeather6.length) {
+                let w = data.HeWeather6;
+                if (w.length == 1 && w[0].status != 'ok') {
+                    res.success({
+                        ToUserName: openId,
+                        MsgType: 'text',
+                        Content: w[0].status
+                    });
+                } else {
+                    res.success({
+                        ToUserName: openId,
+                        MsgType: 'text',
+                        Content: weather.parseAir(w)
+                    });
+                }
+            } else {
+                res.success({
+                    ToUserName: openId,
+                    MsgType: 'text',
+                    Content: '没有获取到数据！'
+                });
+            }
+        })
+        .catch(e => {
+            console.log(e);
+        });
+}
+
 module.exports = (req, res) => {
     console.log(req.body.xml);
     var xml = req.body.xml;
@@ -62,6 +96,8 @@ module.exports = (req, res) => {
                 parseWeather(location, openId, res);
             } else if (xml.Content.indexOf('空气:') >= 0) {
                 let location = xml.Content.replace('空气:', '');
+                console.log('location:', location);
+                parseAir(location, openId, res);
             } else {
                 res.success({
                     ToUserName: openId,
@@ -80,6 +116,8 @@ module.exports = (req, res) => {
                         parseWeather(location, openId, res);
                     } else if (xml.EventKey.indexOf('空气:') >= 0) {
                         let location = xml.EventKey.replace('空气:', '');
+                        console.log('location:', location);
+                        parseAir(location, openId, res);
                     }
                     break;
                 default:

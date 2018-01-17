@@ -16,7 +16,12 @@ module.exports = {
                 {
                     type: 'click',
                     name: '天气预报',
-                    key: '天气:南山'
+                    key: '天气:CN101280604'
+                },
+                {
+                    type: 'click',
+                    name: '空气质量',
+                    key: '空气:CN101280604'
                 },
                 {
                     type: 'view',

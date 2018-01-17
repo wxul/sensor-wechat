@@ -16,7 +16,7 @@ module.exports = {
     // 获取实时空气质量
     getAir(location) {
         return axios
-            .get(`${he_api}/s6/air/now`, {
+            .get(`https://api.heweather.com/s6/air/now`, {
                 params: {
                     key: he_key,
                     location
@@ -43,11 +43,11 @@ module.exports = {
         str += `更新时间: ${update.loc}\r\n`;
         str += `未来 ${arr.length} 天的天气预报: \r\n`;
         arr.forEach(a => {
-            str += `${a.date.substr(5)}: 白天 ${a.cond_txt_d}, 夜间 ${a.cond_txt_n}, ${
-                a.tmp_max
-            }℃ - ${a.tmp_min}℃, 风向 ${a.wind_dir}, 风力 ${a.wind_sc}, 湿度 ${
-                a.hum
-            }%, 日出 ${a.sr}-${a.ss}\r\n`;
+            str += `${a.date.substr(5)}: 白天 ${a.cond_txt_d}, 夜间 ${
+                a.cond_txt_n
+            }, ${a.tmp_max}℃ - ${a.tmp_min}℃, 风向 ${a.wind_dir}, 风力 ${
+                a.wind_sc
+            }, 湿度 ${a.hum}%, 日出 ${a.sr}-${a.ss}\r\n`;
         });
         return str;
     },
@@ -88,6 +88,24 @@ module.exports = {
         s += this.parseNow(obj.now);
         s += this.parseLifestyle(obj.lifestyle);
         s += '\r\n';
+        return s;
+    },
+    parseAir(HeWeather6) {
+        var s = '';
+        HeWeather6.forEach(e => {
+            str += `查询城市: ${e.basic.cnty} ${e.basic.admin_area} ${
+                e.basic.parent_city
+            } ${e.basic.location}\r\n`;
+            var air = e.air_now_city;
+            str += `更新时间: ${e.update.loc.substr(
+                5
+            )}, 发布时间: ${air.pub_time.substr(5)}\r\n`;
+            str += `空气质量 ${air.qlty}, 空气质量指数 ${air.aqi}, 主要污染物 ${
+                air.main
+            }, pm10 ${air.pm10}, pm2.5 ${air.pm25}, 二氧化氮 ${
+                air.no2
+            }, 二氧化硫 ${air.so2}, 一氧化碳 ${air.co}, 臭氧 ${air.o3}\r\n`;
+        });
         return s;
     }
 };
