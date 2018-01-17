@@ -52,7 +52,8 @@ module.exports = {
         var time = new Date();
         time.setMilliseconds(0);
         time.setSeconds(0);
-        time.setMinutes(time.getMinutes() - 30);
+        time.setHours(time.getHours() - 1);
+        // time.setMinutes(time.getMinutes() - 30);
         var m = time.getMinutes();
         if (m < 15) {
             m = 45;
