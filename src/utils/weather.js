@@ -87,7 +87,7 @@ module.exports = {
         return s;
     },
     parseAir(HeWeather6) {
-        var s = '';
+        var str = '';
         HeWeather6.forEach(e => {
             str += `查询城市: ${e.basic.cnty} ${e.basic.admin_area} ${
                 e.basic.parent_city
@@ -102,6 +102,6 @@ module.exports = {
                 air.no2
             }, 二氧化硫 ${air.so2}, 一氧化碳 ${air.co}, 臭氧 ${air.o3}\r\n`;
         });
-        return s;
+        return str;
     }
 };
