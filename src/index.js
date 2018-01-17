@@ -45,7 +45,7 @@ app.get('/cloud-picture2', (req, res) => {
                 response.on('end', () => {
                     console.log('end!', rawData.length, size);
                     // res.end(new Buffer(rawData, 'binary'));
-                    var buff = Buffer.concat(datas, size);
+                    var buff = Buffer.concat(rawData, size);
                     res.setHeader('Content-Type', 'image/jpeg');
                     res.write(buff, 'binary');
                     res.end();
