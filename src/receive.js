@@ -17,9 +17,10 @@ function parseWeather(location, openId, res) {
                 } else {
                     w = w.filter(e => e.status == 'ok');
                     var s = '';
-                    w.forEach(e => {
-                        s += weather.parseWeather(e);
-                    });
+                    s += weather.parseWeather(w[0]);
+                    // w.forEach(e => {
+                    //     s += weather.parseWeather(e);
+                    // });
                     res.success({
                         ToUserName: openId,
                         MsgType: 'text',
