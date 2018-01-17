@@ -71,17 +71,30 @@ app.post('/api', function(req, res) {
                             .then(result => {
                                 console.log(result.data);
                                 var data = result.data;
-                                if (data.status == 'ok') {
-                                    res.success({
-                                        ToUserName: openId,
-                                        MsgType: 'text',
-                                        Content: JSON.stringify(data)
-                                    });
+                                if (
+                                    data &&
+                                    data.HeWeather6 &&
+                                    data.HeWeather6.length
+                                ) {
+                                    let weather = data.HeWeather6[0];
+                                    if (weather.status == 'ok') {
+                                        res.success({
+                                            ToUserName: openId,
+                                            MsgType: 'text',
+                                            Content: JSON.stringify(weather.now)
+                                        });
+                                    } else {
+                                        res.success({
+                                            ToUserName: openId,
+                                            MsgType: 'text',
+                                            Content: weather.status
+                                        });
+                                    }
                                 } else {
                                     res.success({
                                         ToUserName: openId,
                                         MsgType: 'text',
-                                        Content: data.status
+                                        Content: '没有获取到数据！'
                                     });
                                 }
                             })
