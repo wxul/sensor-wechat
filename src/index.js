@@ -6,6 +6,7 @@ const crypto = require('crypto');
 const mid = require('./utils/middleware');
 
 const { token } = require('../app_config');
+const util = require('./utils');
 
 const app = express();
 
@@ -57,6 +58,23 @@ app.post('/api', function(req, res) {
         case 'event':
             switch (xml.Event) {
                 case 'CLICK':
+                    switch (xml.EventKey) {
+                        // 云图
+                        case 'cloud_picture':
+                            res.success({
+                                ToUserName: openId,
+                                MsgType: 'text',
+                                Content: util.getCurrentCloudPicture()
+                            });
+                            break;
+                        default:
+                            res.success({
+                                ToUserName: openId,
+                                MsgType: 'text',
+                                Content: 'result:' + xml.Event + xml.EventKey
+                            });
+                            break;
+                    }
                     res.success({
                         ToUserName: openId,
                         MsgType: 'text',
@@ -83,9 +101,9 @@ app.post('/api', function(req, res) {
 });
 
 const net = require('./net');
-const util = require('./utils/token');
+const util_token = require('./utils/token');
 const menu = require('../config/menu');
-util.getToken().then(t => {
+util_token.getToken().then(t => {
     net.createMenu(menu, t).then(console.log);
 });
 // require('./route')(app);

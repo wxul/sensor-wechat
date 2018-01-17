@@ -1,9 +1,29 @@
 module.exports = {
     button: [
         {
-            type: 'view',
-            name: '监控数据',
-            url: 'http://sensor.home.amayading.com'
+            name: '环境数据',
+            sub_button: [
+                {
+                    type: 'view',
+                    name: 'HOME',
+                    url: 'http://sensor.home.amayading.com'
+                },
+                {
+                    type: 'view',
+                    name: '深圳空气',
+                    url: 'http://aqicn.org/city/shenzhen/'
+                },
+                {
+                    type: 'click',
+                    name: '天气预报',
+                    key: '天气:深圳'
+                },
+                {
+                    type: 'click',
+                    name: '实时卫星云图',
+                    key: 'cloud_picture'
+                }
+            ]
         },
         {
             type: 'view',
