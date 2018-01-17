@@ -15,16 +15,12 @@ module.exports = {
     },
     // 获取实时空气质量
     getAir(location) {
-        return axios
-            .get(`https://api.heweather.com/s6/air/now`, {
-                params: {
-                    key: he_key,
-                    location
-                }
-            })
-            .then(result => {
-                return result.data;
-            });
+        return axios.get(`https://api.heweather.com/s6/air/now`, {
+            params: {
+                key: he_key,
+                location
+            }
+        });
     },
     // 转换实时天气
     parseNow(obj) {
