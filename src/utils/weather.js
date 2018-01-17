@@ -25,5 +25,13 @@ module.exports = {
             .then(result => {
                 return result.data;
             });
+    },
+    // 转换实时天气
+    parseNow(obj) {
+        return `实时天气:${obj.cond_txt},温度:${obj.tmp}℃,体感温度:${
+            obj.fl
+        }℃,风向:${obj.wind_dir},风力:${obj.wind_sc},相对湿度:${
+            obj.hum
+        }%,能见度:${obj.vis}km`;
     }
 };

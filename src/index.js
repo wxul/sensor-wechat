@@ -76,18 +76,18 @@ app.post('/api', function(req, res) {
                                     data.HeWeather6 &&
                                     data.HeWeather6.length
                                 ) {
-                                    let weather = data.HeWeather6[0];
-                                    if (weather.status == 'ok') {
+                                    let w = data.HeWeather6[0];
+                                    if (w.status == 'ok') {
                                         res.success({
                                             ToUserName: openId,
                                             MsgType: 'text',
-                                            Content: JSON.stringify(weather.now)
+                                            Content: weather.parseNow(w.now)
                                         });
                                     } else {
                                         res.success({
                                             ToUserName: openId,
                                             MsgType: 'text',
-                                            Content: weather.status
+                                            Content: w.status
                                         });
                                     }
                                 } else {
