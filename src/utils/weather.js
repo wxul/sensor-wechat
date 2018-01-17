@@ -5,16 +5,13 @@ const axios = require('axios');
 module.exports = {
     // 获取天气
     getWeather(location) {
-        return axios
-            .get(`${he_api}/s6/weather`, {
-                params: {
-                    key: he_key,
-                    location
-                }
-            })
-            .then(result => {
-                return result.data;
-            });
+        console.log(`${he_api}/s6/weather`);
+        return axios.get(`${he_api}/s6/weather`, {
+            params: {
+                key: he_key,
+                location
+            }
+        });
     },
     // 获取实时空气质量
     getAir(location) {

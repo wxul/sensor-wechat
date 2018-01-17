@@ -65,9 +65,12 @@ app.post('/api', function(req, res) {
                 case 'CLICK':
                     if (xml.EventKey.indexOf('天气:') >= 0) {
                         let location = xml.EventKey.replace('天气:', '');
+                        console.log('location:', location);
                         weather
                             .getWeather(location)
-                            .then(data => {
+                            .then(result => {
+                                console.log(result.status);
+                                var data = result.data;
                                 if (data.status == 'ok') {
                                     res.success({
                                         ToUserName: openId,
