@@ -7,6 +7,7 @@ const mid = require('./utils/middleware');
 
 const { token } = require('../app_config');
 const util = require('./utils');
+const weather = require('./utils/weather');
 
 const app = express();
 
@@ -62,28 +63,31 @@ app.post('/api', function(req, res) {
         case 'event':
             switch (xml.Event) {
                 case 'CLICK':
-                    switch (xml.EventKey) {
-                        // 云图
-                        case 'cloud_picture':
-                            res.success({
-                                ToUserName: openId,
-                                MsgType: 'text',
-                                Content: util.getCurrentCloudPicture()
+                    if (xml.EventKey.indexOf('天气:') >= 0) {
+                        let location = xml.EventKey.replace('天气:', '');
+                        weather
+                            .getWeather(location)
+                            .then(data => {
+                                if (data.status == 'ok') {
+                                    res.success({
+                                        ToUserName: openId,
+                                        MsgType: 'text',
+                                        Content: JSON.stringify(data)
+                                    });
+                                } else {
+                                    res.success({
+                                        ToUserName: openId,
+                                        MsgType: 'text',
+                                        Content: data.status
+                                    });
+                                }
+                            })
+                            .catch(e => {
+                                console.log(e);
                             });
-                            break;
-                        default:
-                            res.success({
-                                ToUserName: openId,
-                                MsgType: 'text',
-                                Content: 'result:' + xml.Event + xml.EventKey
-                            });
-                            break;
+                    } else if (xml.EventKey.indexOf('空气:') >= 0) {
+                        let location = xml.EventKey.replace('空气:', '');
                     }
-                    res.success({
-                        ToUserName: openId,
-                        MsgType: 'text',
-                        Content: 'result:CLICK' + xml.EventKey
-                    });
                     break;
                 default:
                     res.success({
