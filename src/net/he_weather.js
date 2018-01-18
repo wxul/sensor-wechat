@@ -7,5 +7,8 @@ module.exports = {
     },
     getAir(location) {
         return axios.get(`/s6/air/now`, { params: { location, key: he_key } });
+    },
+    search(location){
+        return axios.get(`/s6/search`, { params: { location, key: he_key } });
     }
 };

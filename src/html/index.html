@@ -106,6 +106,28 @@
             </div>
         </div>
     </div>
+
+    <div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">提示</div>
+            <div class="am-modal-bd" id="my-confirm-content">
+            </div>
+            <div class="am-modal-footer">
+                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="am-modal am-modal-loading am-modal-no-btn" tabindex="-1" id="my-modal-loading">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">正在载入...</div>
+            <div class="am-modal-bd">
+                <span class="am-icon-spinner am-icon-spin"></span>
+            </div>
+        </div>
+    </div>
+
     <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script src="//cdn.amazeui.org/amazeui/2.7.2/js/amazeui.min.js"></script>
     <script src="//cdn.bootcss.com/iScroll/5.2.0/iscroll.min.js"></script>
@@ -161,8 +183,12 @@
             }
 
             function getData(location) {
+                $('#my-modal-loading').modal('open');
                 $.get('/api2/weather?location=' + location, data => {
                     console.log(data);
+                    setTimeout(() => {
+                        $('#my-modal-loading').modal('close');
+                    }, 200);
                     var heweather = data.HeWeather6;
                     if (heweather && heweather.length && heweather[0].status == 'ok') {
                         var wether = heweather[0];
@@ -234,8 +260,29 @@
             navigator.geolocation.getCurrentPosition(geo_success, geo_error);
 
             function geo_success(position) {
-                $('#my-alert-content').text(position.coords.latitude + ',' + position.coords.longitude);
-                $('#my-alert').modal('open');
+                // $('#my-alert-content').text(position.coords.latitude + ',' + position.coords.longitude);
+                // $('#my-alert').modal('open');
+                $.get(`/api2/air?location=${position.coords.longitude},${position.coords.latitude}`, data => {
+                    console.log(data);
+                    var heweather = data.HeWeather6;
+                    if (heweather && heweather.length && heweather[0].status == 'ok') {
+                        var city = heweather[0].basic;
+                        var current = getStorage('searched') || defaultLocation;
+                        if (city.cid != current.cid) {
+                            $('#my-confirm-content').text(
+                                `定位到 ${city.admin_area} ${city.parent_city} ${city.location}, 是否切换?`
+                            );
+                            $('#my-confirm').modal({
+                                onConfirm: function (options) {
+                                    getData(city.cid);
+                                }
+                            });
+                        }
+                    } else {
+                        // $('#my-alert-content').text(heweather[0].status);
+                        // $('#my-alert').modal('open');
+                    }
+                })
                 console.log(position.coords.latitude, position.coords.longitude);
             }
 
