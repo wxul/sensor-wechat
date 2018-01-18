@@ -67,6 +67,62 @@
         .content #wether .air {
             font-size: 1.2rem;
         }
+
+        .content #hour {
+            margin-top: .8rem;
+            height: 8rem;
+            font-size: 0;
+            white-space: nowrap;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .content #hour .hours-item {
+            display: inline-block;
+            width: 23%;
+            font-size: .8rem;
+            text-align: center;
+        }
+
+        .content #hour .hours-item img {
+            width: 4rem;
+            height: 4rem;
+        }
+
+        .content #forecast {}
+
+        .content #forecast .forecast-item {
+            font-size: 0;
+        }
+
+        .content #forecast .forecast-item>* {
+            display: inline-block;
+            font-size: 1.6rem;
+        }
+
+        .content #forecast .forecast-item time {
+            width: 30%;
+            text-align: left;
+        }
+
+        .content #forecast .forecast-item .forecast-td {
+            width: 20%;
+            text-align: center;
+        }
+
+        .content #forecast .forecast-item img {
+            max-width: 3rem;
+        }
+
+        .content #forecast .forecast-item .forecast-tn {
+            width: 20%;
+            text-align: center;
+        }
+
+        .content #forecast .forecast-item .forecast-tmp {
+            width: 30%;
+            text-align: right;
+        }
     </style>
 </head>
 
@@ -89,7 +145,10 @@
             <div class="dtt"></div>
             <div class="air"></div>
         </div>
-        <div class="wether-hour">
+        <div class="wether-hour" id="hour">
+
+        </div>
+        <div class="forecast" id="forecast">
 
         </div>
     </div>
@@ -145,6 +204,8 @@
     </script> -->
     <script type="text/javascript">
         $(function () {
+            var hoursScroll = null;
+
             function parse(wether) {
                 $('#update').html(
                     `更新时间: ${wether.update.loc}&nbsp;&nbsp;&nbsp;&nbsp;感谢&nbsp;<a href="https://www.heweather.com">和风天气</a>&nbsp;提供免费API`
@@ -156,7 +217,25 @@
                     `${wether.now.cond_txt} <img src="images/${wether.now.cond_code}.png" />&nbsp;&nbsp;&nbsp;&nbsp;${today.tmp_max}°/${today.tmp_min}°`
                 );
 
-                var forecast = wether.daily_forecast.slice(1);
+                var hours = wether.hourly.slice(0, 24);
+                var hours_html = '';
+                hours.forEach(h => {
+                    hours_html +=
+                        `<div class="hours-item"><div class="hours-time">${h.time.substr(-5)}</div><div class="hours-img"><img src="images/${h.cond_code}.png" /></div><div class="hours-tmp">${h.tmp}°</div></div>`
+                });
+                $('#hour').html(hours_html);
+                // hoursScroll = new IScroll('#hour', {
+                //     scrollX: true
+                // });
+
+                var forecast = wether.daily_forecast.slice(1, 4);
+                var forecast_html =
+                    '<div class="forecast-item f-item-head"><time>天气预报</time><div class="forecast-td">白天</div><div class="forecast-tn">夜间</div><div class="forecast-tmp">温度</div></div>';
+                forecast.forEach(f => {
+                    forecast_html +=
+                        `<div class="forecast-item"><time>${f.date.substr(-5)}</time><div class="forecast-td"><img src="images/${f.cond_code_d}.png" /></div><div class="forecast-tn"><img src="images/${f.cond_code_n}.png" /></div><div class="forecast-tmp">${f.tmp_max}°/${f.tmp_min}°</div></div>`
+                });
+                $('#forecast').html(forecast_html);
 
                 $("#address-sl").find("input[name='nickname']").val(
                     `${wether.basic.admin_area} ${wether.basic.parent_city} ${wether.basic.location}`);
@@ -257,7 +336,16 @@
 
             getData(defaultLocation.cid);
 
-            navigator.geolocation.getCurrentPosition(geo_success, geo_error);
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(geo_success, geo_error, {
+                    // 指示浏览器获取高精度的位置，默认为false
+                    enableHighAcuracy: false,
+                    // 指定获取地理位置的超时时间，默认不限时，单位为毫秒
+                    timeout: 5000,
+                    // 最长有效期，在重复获取地理位置时，此参数指定多久再次获取位置。
+                    maximumAge: 3000
+                });
+            }
 
             function geo_success(position) {
                 // $('#my-alert-content').text(position.coords.latitude + ',' + position.coords.longitude);
