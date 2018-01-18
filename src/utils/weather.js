@@ -30,13 +30,21 @@ module.exports = {
             obj.hum
         }%, 能见度 ${obj.vis}km\r\n`;
     },
-    // 转换天气预报
-    parseForecast(basic, update, arr) {
+    // 转换地点
+    parseLocation(basic, showcid) {
         var str = '';
-        str += `查询城市: ${basic.cnty} ${basic.admin_area} ${
+        var cid = showcid ? `CID:${basic.cid}:` : '';
+        str += `查询城市: ${cid} ${basic.cnty} ${basic.admin_area} ${
             basic.parent_city
         } ${basic.location}\r\n`;
-        str += `更新时间: ${update.loc}\r\n`;
+        return str;
+    },
+    parseDate(update) {
+        return `更新时间: ${update.loc}\r\n`;
+    },
+    // 转换天气预报
+    parseForecast(arr) {
+        var str = '';
         str += `未来 ${arr.length} 天的天气预报: \r\n`;
         arr.forEach(a => {
             str += `${a.date.substr(5)}: 白天 ${a.cond_txt_d}, 夜间 ${
@@ -80,7 +88,9 @@ module.exports = {
         return str;
     },
     parseWeather(obj) {
-        var s = this.parseForecast(obj.basic, obj.update, obj.daily_forecast);
+        var s = this.parseLocation(obj.basic);
+        s += this.parseDate(obj.update);
+        s += this.parseForecast(obj.daily_forecast);
         s += this.parseNow(obj.now);
         s += this.parseLifestyle(obj.lifestyle);
         s += '\r\n';
