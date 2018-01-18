@@ -91,7 +91,7 @@ const menu = require('../config/menu');
 util_token.getToken().then(t => {
     net.createMenu(menu, t).then(console.log);
 });
-// require('./route')(app);
+require('./route')(app);
 
 app.use(function(req, res, next) {
     console.log(req.url);
