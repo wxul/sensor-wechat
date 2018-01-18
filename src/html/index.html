@@ -54,17 +54,20 @@
                     wFsize = wWidth > 1080 ? 144 : wWidth / 7.5;
                     wFsize = wFsize > 32 ? wFsize : 32;
                     // document.getElementsByTagName('html')[0].dataset.dpr = wDpr;
-                    document.getElementsByTagName('html')[0].style.fontSize = wFsize/10 + 'px';
+                    document.getElementsByTagName('html')[0].style.fontSize = wFsize*wDpr/10 + 'px';
+                    alert(`1 ${wFsize} ${wDpr}`);
                     // document.getElementById("fixed").style.display = "none";
                 }, 500);
             } else {
                 // document.getElementsByTagName('html')[0].dataset.dpr = wDpr;
-                document.getElementsByTagName('html')[0].style.fontSize = wFsize/10 + 'px';
+                document.getElementsByTagName('html')[0].style.fontSize = wFsize*wDpr/10 + 'px';
+                alert(`2 ${wFsize} ${wDpr}`);
                 // document.getElementById("fixed").style.display = "none";
             }
             // alert("fz="+wFsize+";dpr="+window.devicePixelRatio+";UA="+uAgent+";width="+wWidth+";sw="+screen.width+";wiw="+window.innerWidth+";wsw="+window.screen.width+window.screen.availWidth);
         }
         resizeRoot();
+        
     </script>
     <style>
         html,
