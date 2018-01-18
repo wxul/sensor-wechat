@@ -1,11 +1,12 @@
 const weather = require('./utils/weather');
+const w_api = require('./net/he_weather');
 
 function parseWeather(location, openId, res) {
-    weather
+    w_api
         .getWeather(location)
-        .then(result => {
-            console.log(result.data);
-            var data = result.data;
+        .then(data => {
+            console.log(data);
+            // var data = result.data;
             if (data && data.HeWeather6 && data.HeWeather6.length) {
                 let w = data.HeWeather6;
                 if (w.length == 1 && w[0].status != 'ok') {
@@ -51,11 +52,11 @@ function parseWeather(location, openId, res) {
 }
 
 function parseAir(location, openId, res) {
-    weather
+    w_api
         .getAir(location)
-        .then(result => {
-            console.log(result.data);
-            var data = result.data;
+        .then(data => {
+            console.log(data);
+            // var data = result.data;
             if (data && data.HeWeather6 && data.HeWeather6.length) {
                 let w = data.HeWeather6;
                 if (w.length == 1 && w[0].status != 'ok') {

@@ -1,12 +1,249 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>天气预报</title>
+    <link rel="stylesheet" href="//cdn.amazeui.org/amazeui/2.7.2/css/amazeui.min.css">
+    <link rel="stylesheet" href="styles/amazeui.address.min.css">
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            margin: 0 auto;
+            overflow-x: hidden;
+            overflow-y: auto;
+            background-color: #0e90d2;
+            /* background-color: #79CDCD; */
+        }
+
+        .am-form-group {
+            margin-bottom: 0;
+        }
+
+        .content {
+            padding: 0 1rem;
+            color: #fff;
+        }
+
+        .content a {
+            color: #00aa89;
+        }
+
+        .content #update {
+            font-size: .8rem;
+            margin-bottom: 0;
+        }
+
+        .content #wether {
+            text-align: center;
+        }
+
+        .content #wether .tmp {
+            font-size: 10rem;
+        }
+
+        .content #wether .fl {
+            font-size: 1.2rem;
+        }
+
+        .content #wether .ww {
+            font-size: 1.2rem;
+        }
+
+        .content #wether .ww img {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+
+        .content #wether .air {
+            font-size: 1.2rem;
+        }
+    </style>
 </head>
+
 <body>
-    123
+    <form class="am-form am-padding-sm" id="address-sl">
+        <div class="am-form-group am-input-group" id="address2">
+            <span class="am-input-group-label">
+                <i class="am-icon am-icon-home"></i>
+                <span class="am-padding-horizontal-xs">地址</span>
+            </span>
+            <input readonly type="text" name="nickname" class="am-form-field am-radius" placeholder="请选择地址" required="" value="广东 深圳 南山">
+        </div>
+    </form>
+    <div class="content">
+        <p class="am-sans-serif" id="update"></p>
+        <div class="wether" id="wether">
+            <div class="tmp"></div>
+            <div class="fl"></div>
+            <div class="ww"></div>
+            <div class="dtt"></div>
+            <div class="air"></div>
+        </div>
+        <div class="wether-hour">
+
+        </div>
+    </div>
+
+
+    <div class="am-modal am-modal-alert" tabindex="-1" id="my-alert">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">提示</div>
+            <div class="am-modal-bd" id="my-alert-content">
+                Hello world！
+            </div>
+            <div class="am-modal-footer">
+                <span class="am-modal-btn">确定</span>
+            </div>
+        </div>
+    </div>
+    <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//cdn.amazeui.org/amazeui/2.7.2/js/amazeui.min.js"></script>
+    <script src="//cdn.bootcss.com/iScroll/5.2.0/iscroll.min.js"></script>
+    <script src="scripts/address.min.js"></script>
+    <!-- <script src="//res.wx.qq.com/open/js/jweixin-1.2.0.js"></script> -->
+    <!-- <script>
+        wx.config({
+            debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: '', // 必填，公众号的唯一标识
+            timestamp: +new Date(), // 必填，生成签名的时间戳
+            nonceStr: '', // 必填，生成签名的随机串
+            signature: '', // 必填，签名，见附录1
+            jsApiList: [] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        });
+    </script> -->
+    <script type="text/javascript">
+        $(function () {
+            function parse(wether) {
+                $('#update').html(
+                    `更新时间: ${wether.update.loc}&nbsp;&nbsp;&nbsp;&nbsp;感谢&nbsp;<a href="https://www.heweather.com">和风天气</a>&nbsp;提供免费API`
+                );
+                $('#wether .tmp').text(`${wether.now.tmp}°`);
+                $('#wether .fl').text(`体感温度 : ${wether.now.fl}°, 湿度 : ${wether.now.hum}%`);
+                var today = wether.daily_forecast[0];
+                $('#wether .ww').html(
+                    `${wether.now.cond_txt} <img src="images/${wether.now.cond_code}.png" />&nbsp;&nbsp;&nbsp;&nbsp;${today.tmp_max}°/${today.tmp_min}°`
+                );
+
+                var forecast = wether.daily_forecast.slice(1);
+
+                $("#address-sl").find("input[name='nickname']").val(
+                    `${wether.basic.admin_area} ${wether.basic.parent_city} ${wether.basic.location}`);
+                setStorage('searched', {
+                    prov: wether.basic.admin_area,
+                    city: wether.basic.parent_city,
+                    area: wether.basic.location,
+                    cid: wether.basic.cid
+                })
+            }
+
+            function parseAir(wether) {
+                var air = wether.air_now_city;
+                $('#wether .air').html(`空气质量 ${air.qlty}`);
+
+                // $("#address-sl").find("input[name='nickname']").val(
+                //     `${wether.basic.admin_area} ${wether.basic.parent_city} ${wether.basic.location}`);
+                // setStorage('searched', {
+                //     prov: wether.basic.admin_area,
+                //     city: wether.basic.parent_city,
+                //     area: wether.basic.location,
+                //     cid: wether.basic.cid
+                // })
+            }
+
+            function getData(location) {
+                $.get('/api2/weather?location=' + location, data => {
+                    console.log(data);
+                    var heweather = data.HeWeather6;
+                    if (heweather && heweather.length && heweather[0].status == 'ok') {
+                        var wether = heweather[0];
+                        parse(wether);
+                    } else {
+                        $('#my-alert-content').text(heweather[0].status);
+                        $('#my-alert').modal('open');
+                    }
+                })
+                $.get('/api2/air?location=' + location, data => {
+                    console.log(data);
+                    var heweather = data.HeWeather6;
+                    if (heweather && heweather.length && heweather[0].status == 'ok') {
+                        var wether = heweather[0];
+                        parseAir(wether);
+                    } else {
+                        $('#my-alert-content').text(heweather[0].status);
+                        $('#my-alert').modal('open');
+                    }
+                })
+            }
+
+            function setStorage(key, v) {
+                localStorage.setItem(key, JSON.stringify(v));
+            }
+
+            function getStorage(key) {
+                try {
+                    return JSON.parse(localStorage.getItem(key));
+                } catch (error) {
+                    return null;
+                }
+            }
+
+            document.addEventListener('touchmove', function (e) {
+                e.preventDefault();
+            }, false);
+
+            var defaultLocation = getStorage('searched') || {
+                prov: '广东',
+                city: '深圳',
+                area: '南山',
+                cid: 'CN101280604'
+            }
+
+            //	自定义输出
+            $("#address2").address({
+                customOutput: true,
+                prov: defaultLocation.prov,
+                cities: defaultLocation.city,
+                areas: defaultLocation.area,
+                selectEnd: function (json, address) {
+                    console.log(json.code);
+                    $("#address-sl").find("input[name='nickname']").val(
+                        `${json.prov} ${json.cities} ${json.areas}`);
+                    // for (var key in json) {
+                    //     $("#address1-form").find("input[name='" + key + "']").val(json[key]);
+                    // }
+                    getData(json.code);
+                }
+            }).on("provTap", function (event, activeli) {
+                console.log(activeli.text());
+            }).on("cityTap", function (event, activeli) {
+                console.log(activeli.text());
+            })
+
+            getData(defaultLocation.cid);
+
+            navigator.geolocation.getCurrentPosition(geo_success, geo_error);
+
+            function geo_success(position) {
+                $('#my-alert-content').text(position.coords.latitude + ',' + position.coords.longitude);
+                $('#my-alert').modal('open');
+                console.log(position.coords.latitude, position.coords.longitude);
+            }
+
+            function geo_error(msg) {
+                console.log(msg.code, msg.message);
+            }
+        });
+    </script>
 </body>
+
 </html>

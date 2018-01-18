@@ -10,18 +10,13 @@ module.exports = {
                 },
                 {
                     type: 'view',
-                    name: '深圳空气',
+                    name: 'Outside',
                     url: 'http://aqicn.org/city/shenzhen/'
                 },
                 {
-                    type: 'click',
+                    type: 'view',
                     name: '天气预报',
-                    key: '天气:CN101280604'
-                },
-                {
-                    type: 'click',
-                    name: '空气质量',
-                    key: '空气:CN101280604'
+                    url: 'http://wechat.amayading.com/wether'
                 },
                 {
                     type: 'view',
