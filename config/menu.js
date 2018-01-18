@@ -16,7 +16,7 @@ module.exports = {
                 {
                     type: 'view',
                     name: '天气预报',
-                    url: 'http://wechat.amayading.com/wether'
+                    url: 'http://wechat.amayading.com/weather'
                 },
                 {
                     type: 'view',

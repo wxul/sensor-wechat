@@ -15,6 +15,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(mid.middleware);
 
+app.use('/weather', express.static(path.join(__dirname, './html')));
 app.use('/wether', express.static(path.join(__dirname, './html')));
 
 app.get('/', (req, res) => {
