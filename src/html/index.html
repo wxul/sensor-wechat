@@ -75,12 +75,41 @@
             font-size: 0;
             white-space: nowrap;
             position: relative;
+
+            z-index: 1;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            /* height: 100%; */
+            /* width: 5000px; */
+            -webkit-transform: translateZ(0);
+            -moz-transform: translateZ(0);
+            -ms-transform: translateZ(0);
+            -o-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-text-size-adjust: none;
+            -moz-text-size-adjust: none;
+            -ms-text-size-adjust: none;
+            -o-text-size-adjust: none;
+            text-size-adjust: none;
             /* overflow-x: auto; */
+        }
+
+        .content #hour ul {
+            white-space: nowrap;
+            width: auto;
+        }
+
+        .content #wrapper {
+            overflow: hidden;
         }
 
         .content #hour .hours-item {
             display: inline-block;
-            width: 15%;
+            width: 10rem;
             font-size: 1.4rem;
             text-align: center;
         }
@@ -146,9 +175,12 @@
             <div class="dtt"></div>
             <div class="air"></div>
         </div>
-        <div class="wether-hour" id="hour">
+        <div id="wrapper">
+            <div class="wether-hour" id="hour">
 
+            </div>
         </div>
+
         <div class="forecast" id="forecast">
 
         </div>
@@ -226,7 +258,8 @@
                 });
                 hours_html += '</ul>';
                 $('#hour').html(hours_html);
-                hoursScroll = new IScroll('#hour', {
+                $('#hour').width(hours.length * 10 + 'rem');
+                hoursScroll = new IScroll('#wrapper', {
                     scrollX: true
                 });
                 console.log(hoursScroll);
