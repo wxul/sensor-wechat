@@ -80,7 +80,7 @@
         body {
             margin: 0 auto;
             width: 7.5rem;
-            overflow: hidden;
+            overflow-x: hidden;
             /* overflow-y: auto; */
             background-color: #0e90d2;
             /* background-color: #79CDCD; */
@@ -279,42 +279,50 @@
         .am-modal-btn {
             font-size: .3rem;
         }
+
+        #body-wrapper {
+            height: 100%;
+        }
     </style>
 
 </head>
 
 <body>
-    <form class="am-form am-padding-sm" id="address-sl">
-        <div class="am-form-group am-input-group" id="address2">
-            <span class="am-input-group-label">
-                <i class="am-icon am-icon-home"></i>
-                <span class="am-padding-horizontal-xs">地址</span>
-            </span>
-            <input readonly type="text" name="nickname" class="am-form-field am-radius" placeholder="请选择地址" required="" value="广东 深圳 南山">
-        </div>
-    </form>
-    <div class="content">
-        <p class="am-sans-serif" id="update"></p>
-        <div class="wether" id="wether">
-            <div class="tmp"></div>
-            <div class="fl"></div>
-            <div class="ww"></div>
-            <div class="dtt"></div>
-            <div class="air"></div>
-        </div>
-        <div id="wrapper">
-            <div class="wether-hour" id="hour">
+    <div id="body-wrapper">
+        <div id="body-scroll">
+            <form class="am-form am-padding-sm" id="address-sl">
+                <div class="am-form-group am-input-group" id="address2">
+                    <span class="am-input-group-label">
+                        <i class="am-icon am-icon-home"></i>
+                        <span class="am-padding-horizontal-xs">地址</span>
+                    </span>
+                    <input readonly type="text" name="nickname" class="am-form-field am-radius" placeholder="请选择地址" required="" value="广东 深圳 南山">
+                </div>
+            </form>
+            <div class="content">
+                <p class="am-sans-serif" id="update"></p>
+                <div class="wether" id="wether">
+                    <div class="tmp"></div>
+                    <div class="fl"></div>
+                    <div class="ww"></div>
+                    <div class="dtt"></div>
+                    <div class="air"></div>
+                </div>
+                <div id="wrapper">
+                    <div class="wether-hour" id="hour">
 
+                    </div>
+                </div>
+
+                <div class="forecast" id="forecast">
+
+                </div>
+            </div>
+            <div id="footer" style="margin-top:1600px;">
+                感谢&nbsp;
+                <a href="https://www.heweather.com">和风天气</a>&nbsp;提供免费API
             </div>
         </div>
-
-        <div class="forecast" id="forecast">
-
-        </div>
-    </div>
-    <div id="footer" style="margin-top:1600px;">
-        感谢&nbsp;
-        <a href="https://www.heweather.com">和风天气</a>&nbsp;提供免费API
     </div>
 
 
@@ -369,7 +377,7 @@
     <script type="text/javascript">
         $(function () {
             var hoursScroll = null;
-            var bodyScroll = new IScroll('body');
+            var bodyScroll = new IScroll('#body-wrapper');
 
             function parse(wether) {
                 $('#update').html(
@@ -392,7 +400,8 @@
                 $('#hour').html(hours_html);
                 $('#hour').width(hours.length * 1.5 + 'rem');
                 hoursScroll = new IScroll('#wrapper', {
-                    scrollX: true
+                    scrollX: true,
+                    click: true
                 });
 
                 var forecast = wether.daily_forecast.slice(1, 7);
