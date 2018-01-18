@@ -54,20 +54,19 @@
                     wFsize = wWidth > 1080 ? 144 : wWidth / 7.5;
                     wFsize = wFsize > 32 ? wFsize : 32;
                     document.getElementsByTagName('html')[0].dataset.dpr = wDpr;
-                    document.getElementsByTagName('html')[0].style.fontSize = wFsize/10 + 'px';
+                    document.getElementsByTagName('html')[0].style.fontSize = wFsize / 10 + 'px';
                     // alert(`1 ${wFsize} ${wDpr}`);
                     // document.getElementById("fixed").style.display = "none";
                 }, 500);
             } else {
                 document.getElementsByTagName('html')[0].dataset.dpr = wDpr;
-                document.getElementsByTagName('html')[0].style.fontSize = wFsize/10 + 'px';
+                document.getElementsByTagName('html')[0].style.fontSize = wFsize / 10 + 'px';
                 // alert(`2 ${wFsize} ${wDpr}`);
                 // document.getElementById("fixed").style.display = "none";
             }
             // alert("fz="+wFsize+";dpr="+window.devicePixelRatio+";UA="+uAgent+";width="+wWidth+";sw="+screen.width+";wiw="+window.innerWidth+";wsw="+window.screen.width+window.screen.availWidth);
         }
         resizeRoot();
-        
     </script>
     <style>
         html,
@@ -96,7 +95,7 @@
         }
 
         .content a {
-            color: #00aa89;
+            color: #fff;
         }
 
         .content #update {
@@ -170,7 +169,7 @@
 
         .content #hour .hours-item {
             display: inline-block;
-            width: 5rem;
+            width: 8rem;
             font-size: 2rem;
             text-align: center;
         }
@@ -214,6 +213,29 @@
         .content #forecast .forecast-item .forecast-tmp {
             width: 30%;
         }
+
+        #footer {
+            margin: 2rem 0;
+            text-align: center;
+            color: #fff;
+        }
+
+        #footer a {
+            color: #00aa89;
+        }
+
+        .am-form-field,
+        .am-padding-horizontal-xs {
+            font-size: 3rem;
+        }
+
+        .am-input-group-label {
+            display: none;
+        }
+
+        #address2 {
+            width: 100%;
+        }
     </style>
 
 </head>
@@ -246,6 +268,10 @@
         <div class="forecast" id="forecast">
 
         </div>
+    </div>
+    <div id="footer">
+        感谢&nbsp;
+        <a href="https://www.heweather.com">和风天气</a>&nbsp;提供免费API
     </div>
 
 
@@ -303,7 +329,7 @@
 
             function parse(wether) {
                 $('#update').html(
-                    `更新时间: ${wether.update.loc}&nbsp;&nbsp;&nbsp;&nbsp;感谢&nbsp;<a href="https://www.heweather.com">和风天气</a>&nbsp;提供免费API`
+                    `更新时间: ${wether.update.loc}`
                 );
                 $('#wether .tmp').text(`${wether.now.tmp}°`);
                 $('#wether .fl').text(`体感温度 : ${wether.now.fl}°, 湿度 : ${wether.now.hum}%`);
@@ -320,7 +346,7 @@
                 });
                 hours_html += '</ul>';
                 $('#hour').html(hours_html);
-                $('#hour').width(hours.length * 5 + 'rem');
+                $('#hour').width(hours.length * 8 + 'rem');
                 hoursScroll = new IScroll('#wrapper', {
                     scrollX: true
                 });
