@@ -54,13 +54,13 @@
                     wFsize = wWidth > 1080 ? 144 : wWidth / 7.5;
                     wFsize = wFsize > 32 ? wFsize : 32;
                     document.getElementsByTagName('html')[0].dataset.dpr = wDpr;
-                    document.getElementsByTagName('html')[0].style.fontSize = wFsize / 10 + 'px';
+                    document.getElementsByTagName('html')[0].style.fontSize = wFsize + 'px';
                     // alert(`1 ${wFsize} ${wDpr}`);
                     // document.getElementById("fixed").style.display = "none";
                 }, 500);
             } else {
                 document.getElementsByTagName('html')[0].dataset.dpr = wDpr;
-                document.getElementsByTagName('html')[0].style.fontSize = wFsize / 10 + 'px';
+                document.getElementsByTagName('html')[0].style.fontSize = wFsize + 'px';
                 // alert(`2 ${wFsize} ${wDpr}`);
                 // document.getElementById("fixed").style.display = "none";
             }
@@ -79,10 +79,17 @@
 
         body {
             margin: 0 auto;
+            width: 7.5rem;
             overflow-x: hidden;
             overflow-y: auto;
             background-color: #0e90d2;
             /* background-color: #79CDCD; */
+        }
+
+        ul,
+        li {
+            margin: 0;
+            padding: 0;
         }
 
         .am-form-group {
@@ -90,7 +97,7 @@
         }
 
         .content {
-            padding: 0 1rem;
+            padding: 0 .1rem;
             color: #fff;
         }
 
@@ -99,8 +106,8 @@
         }
 
         .content #update {
-            font-size: 3rem;
-            margin-bottom: 0;
+            font-size: .3rem;
+            margin: 0;
         }
 
         .content #wether {
@@ -108,29 +115,29 @@
         }
 
         .content #wether .tmp {
-            font-size: 30rem;
+            font-size: 2rem;
         }
 
         .content #wether .fl {
-            font-size: 3rem;
+            font-size: .3rem;
         }
 
         .content #wether .ww {
-            font-size: 3rem;
+            font-size: .3rem;
         }
 
         .content #wether .ww img {
-            width: 3rem;
+            width: .5rem;
             /* height: 3rem; */
             max-width: 100%;
         }
 
         .content #wether .air {
-            font-size: 3rem;
+            font-size: .3rem;
         }
 
         .content #hour {
-            margin-top: 2rem;
+            margin-top: .2rem;
             /* height: 10rem; */
             font-size: 0;
             white-space: nowrap;
@@ -169,28 +176,29 @@
 
         .content #hour .hours-item {
             display: inline-block;
-            width: 8rem;
-            font-size: 3rem;
+            width: 1.5rem;
+            font-size: .3rem;
             text-align: center;
         }
 
         .content #hour .hours-item img {
-            width: 6rem;
+            width: .6rem;
             /* height: 6rem; */
             max-width: 100%;
         }
 
         .content #forecast {
-            margin-top: 2rem;
+            margin-top: .2rem;
         }
 
         .content #forecast .forecast-item {
             font-size: 0;
+            margin: .1rem 0;
         }
 
         .content #forecast .forecast-item>* {
             display: inline-block;
-            font-size: 3rem;
+            font-size: .3rem;
             text-align: center;
         }
 
@@ -203,7 +211,7 @@
         }
 
         .content #forecast .forecast-item img {
-            max-width: 4rem;
+            max-width: .4rem;
         }
 
         .content #forecast .forecast-item .forecast-tn {
@@ -215,9 +223,9 @@
         }
 
         #footer {
-            margin: 2rem 0;
+            margin: .2rem 0;
             text-align: center;
-            font-size: 3rem;
+            font-size: .3rem;
             color: #fff;
         }
 
@@ -227,7 +235,11 @@
 
         input.am-form-field,
         .am-padding-horizontal-xs {
-            font-size: 3rem !important;
+            font-size: .3rem !important;
+        }
+
+        .am-padding-sm {
+            padding: .1rem;
         }
 
         .am-input-group-label {
@@ -239,7 +251,33 @@
         }
 
         .am-address-popup .am-popup-bd .am-address-list>div>ul>li {
-            font-size: 2.4rem;
+            font-size: .24rem;
+        }
+
+        .am-modal-hd {
+            font-size: .4rem;
+        }
+
+        .am-modal-loading .am-icon-spin {
+            font-size: 1rem;
+        }
+
+        .am-modal-loading .am-modal-bd {
+            line-height: 1rem;
+        }
+
+        .am-modal-dialog .am-modal-bd {
+            font-size: .3rem;
+            line-height: .3rem;
+        }
+
+        .am-modal-hd {
+            font-size: .4rem;
+            padding-top: 8px;
+        }
+
+        .am-modal-btn {
+            font-size: .3rem;
         }
     </style>
 
@@ -355,9 +393,8 @@
                 hoursScroll = new IScroll('#wrapper', {
                     scrollX: true
                 });
-                console.log(hoursScroll);
 
-                var forecast = wether.daily_forecast.slice(1, 4);
+                var forecast = wether.daily_forecast.slice(1, 7);
                 var forecast_html =
                     '<div class="forecast-item f-item-head"><time>天气预报</time><div class="forecast-td">白天</div><div class="forecast-tn">夜间</div><div class="forecast-tmp">温度</div></div>';
                 forecast.forEach(f => {
