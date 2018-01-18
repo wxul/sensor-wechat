@@ -61,7 +61,8 @@
 
         .content #wether .ww img {
             width: 3rem;
-            height: 3rem;
+            /* height: 3rem; */
+            max-width: 100%;
         }
 
         .content #wether .air {
@@ -86,7 +87,8 @@
 
         .content #hour .hours-item img {
             width: 6rem;
-            height: 6rem;
+            /* height: 6rem; */
+            max-width: 100%;
         }
 
         .content #forecast {
@@ -217,15 +219,17 @@
                 );
 
                 var hours = wether.hourly.slice(0, 24);
-                var hours_html = '';
+                var hours_html = '<ul>';
                 hours.forEach(h => {
                     hours_html +=
-                        `<div class="hours-item"><div class="hours-time">${h.time.substr(-5)}</div><div class="hours-img"><img src="images/${h.cond_code}.png" /></div><div class="hours-tmp">${h.tmp}°</div></div>`
+                        `<li class="hours-item"><div class="hours-time">${h.time.substr(-5)}</div><div class="hours-img"><img src="images/${h.cond_code}.png" /></div><div class="hours-tmp">${h.tmp}°</div></li>`
                 });
+                hours_html += '</ul>';
                 $('#hour').html(hours_html);
-                // hoursScroll = new IScroll('#hour', {
-                //     scrollX: true
-                // });
+                hoursScroll = new IScroll('#hour', {
+                    scrollX: true
+                });
+                console.log(hoursScroll);
 
                 var forecast = wether.daily_forecast.slice(1, 4);
                 var forecast_html =
