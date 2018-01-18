@@ -55,13 +55,13 @@
                     wFsize = wFsize > 32 ? wFsize : 32;
                     document.getElementsByTagName('html')[0].dataset.dpr = wDpr;
                     document.getElementsByTagName('html')[0].style.fontSize = wFsize/10 + 'px';
-                    alert(`1 ${wFsize} ${wDpr}`);
+                    // alert(`1 ${wFsize} ${wDpr}`);
                     // document.getElementById("fixed").style.display = "none";
                 }, 500);
             } else {
                 document.getElementsByTagName('html')[0].dataset.dpr = wDpr;
                 document.getElementsByTagName('html')[0].style.fontSize = wFsize/10 + 'px';
-                alert(`2 ${wFsize} ${wDpr}`);
+                // alert(`2 ${wFsize} ${wDpr}`);
                 // document.getElementById("fixed").style.display = "none";
             }
             // alert("fz="+wFsize+";dpr="+window.devicePixelRatio+";UA="+uAgent+";width="+wWidth+";sw="+screen.width+";wiw="+window.innerWidth+";wsw="+window.screen.width+window.screen.availWidth);
@@ -100,7 +100,7 @@
         }
 
         .content #update {
-            font-size: 1.4rem;
+            font-size: 3rem;
             margin-bottom: 0;
         }
 
@@ -109,15 +109,15 @@
         }
 
         .content #wether .tmp {
-            font-size: 20rem;
+            font-size: 30rem;
         }
 
         .content #wether .fl {
-            font-size: 2rem;
+            font-size: 3rem;
         }
 
         .content #wether .ww {
-            font-size: 2rem;
+            font-size: 3rem;
         }
 
         .content #wether .ww img {
@@ -127,7 +127,7 @@
         }
 
         .content #wether .air {
-            font-size: 2rem;
+            font-size: 3rem;
         }
 
         .content #hour {
@@ -171,7 +171,7 @@
         .content #hour .hours-item {
             display: inline-block;
             width: 5rem;
-            font-size: 1.4rem;
+            font-size: 2rem;
             text-align: center;
         }
 
@@ -191,7 +191,7 @@
 
         .content #forecast .forecast-item>* {
             display: inline-block;
-            font-size: 2rem;
+            font-size: 3rem;
             text-align: center;
         }
 
