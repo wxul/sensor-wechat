@@ -223,7 +223,7 @@
         }
 
         #footer {
-            margin: .2rem 0;
+            padding: 1rem 0;
             text-align: center;
             font-size: .3rem;
             color: #fff;
@@ -377,7 +377,7 @@
     <script type="text/javascript">
         $(function () {
             var hoursScroll = null;
-            var bodyScroll = new IScroll('#body-wrapper');
+            var bodyScroll = null;
 
             function parse(wether) {
                 $('#update').html(
@@ -453,7 +453,9 @@
                         $('#my-alert').modal('open');
                     }
 
-                    setTimeout(bodyScroll.refresh, 0);
+                    setTimeout(() => {
+                        bodyScroll = new IScroll('#body-wrapper');
+                    }, 0);
                 })
                 $.get('/api2/air?location=' + location, data => {
                     console.log(data);
@@ -465,7 +467,10 @@
                         $('#my-alert-content').text(heweather[0].status);
                         $('#my-alert').modal('open');
                     }
-                    setTimeout(bodyScroll.refresh, 0);
+
+                    setTimeout(() => {
+                        bodyScroll = new IScroll('#body-wrapper');
+                    }, 0);
                 })
             }
 
