@@ -138,6 +138,20 @@ module.exports = (req, res) => {
                         }
                     }
                     break;
+                case 'subscribe':
+                    res.success({
+                        ToUserName: openId,
+                        MsgType: 'text',
+                        Content: '欢迎关注 AmayaのAQI '
+                    });
+                    break;
+                case 'unsubscribe':
+                    res.success({
+                        ToUserName: openId,
+                        MsgType: 'text',
+                        Content: 'Good bye!'
+                    });
+                    break;
                 default:
                     res.success({
                         ToUserName: openId,
