@@ -377,7 +377,7 @@
     <script type="text/javascript">
         $(function () {
             var hoursScroll = null;
-            var bodyScroll = null;
+            var bodyScroll = new IScroll('#body-wrapper');
 
             function parse(wether) {
                 $('#update').html(
@@ -453,7 +453,7 @@
                         $('#my-alert').modal('open');
                     }
 
-                    bodyScroll = new IScroll('#body-wrapper');
+                    setTimeout(bodyScroll.refresh, 0);
                 })
                 $.get('/api2/air?location=' + location, data => {
                     console.log(data);
@@ -465,7 +465,7 @@
                         $('#my-alert-content').text(heweather[0].status);
                         $('#my-alert').modal('open');
                     }
-                    bodyScroll = new IScroll('#body-wrapper');
+                    setTimeout(bodyScroll.refresh, 0);
                 })
             }
 
