@@ -27,16 +27,21 @@ module.exports = {
         },
         {
             type: 'view',
-            name: '看看直播',
-            url: 'http://sensor.home.amayading.com/live'
+            name: '生活书吧',
+            url: 'http://dwz.cn/77XGWL'
         },
         {
-            name: '浇水',
+            name: '智能家居',
             sub_button: [
                 {
                     type: 'click',
                     name: '确定浇水',
                     key: 'take_water'
+                },
+                {
+                    type: 'view',
+                    name: '看看直播',
+                    url: 'http://sensor.home.amayading.com/live'
                 }
             ]
         }

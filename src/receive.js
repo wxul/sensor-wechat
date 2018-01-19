@@ -1,5 +1,6 @@
 const weather = require('./utils/weather');
 const w_api = require('./net/he_weather');
+const whiteList = require('../config/white');
 
 function parseWeather(location, openId, res) {
     w_api
@@ -119,6 +120,22 @@ module.exports = (req, res) => {
                         let location = xml.EventKey.replace('空气:', '');
                         console.log('location:', location);
                         parseAir(location, openId, res);
+                    } else {
+                        if (xml.EventKey == 'take_water') {
+                            if (whiteList.indexOf(openId) >= 0) {
+                                res.success({
+                                    ToUserName: openId,
+                                    MsgType: 'text',
+                                    Content: `当前用户:${openId} 可以浇水 (TODO)`
+                                });
+                            } else {
+                                res.success({
+                                    ToUserName: openId,
+                                    MsgType: 'text',
+                                    Content: `当前用户:${openId} 木有权限`
+                                });
+                            }
+                        }
                     }
                     break;
                 default:
