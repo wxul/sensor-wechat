@@ -8,9 +8,11 @@ const mid = require('./utils/middleware');
 const { token } = require('../app_config');
 const util = require('./utils');
 const weather = require('./utils/weather');
+const favicon = require('serve-favicon');
 
 const app = express();
 
+app.use(favicon(path.join(__dirname, 'html', 'favicon.ico')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(mid.middleware);
