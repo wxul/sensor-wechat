@@ -140,7 +140,7 @@ module.exports = (req, res) => {
                             res.success({
                                 ToUserName: openId,
                                 MsgType: 'text',
-                                Content: fm.format()
+                                Content: fm.format(openId)
                             });
                         }
                     }

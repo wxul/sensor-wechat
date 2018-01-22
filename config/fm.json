@@ -17,6 +17,19 @@
     {
         "name": "NHK电台",
         "url": "http://www.nhk.or.jp/radionews/",
-        "type": ""
+        "type": "",
+        "allow_users": ["orqNIs_Qa36tel35mbcPlBRt9hRw"]
+    },
+    {
+        "name": "TBS NEWS",
+        "url": "http://news.tbs.co.jp/",
+        "type": "",
+        "allow_users": ["orqNIs_Qa36tel35mbcPlBRt9hRw"]
+    },
+    {
+        "name": "FNN NEWS",
+        "url": "http://www.fnn-news.com/",
+        "type": "",
+        "allow_users": ["orqNIs_Qa36tel35mbcPlBRt9hRw"]
     }
 ]
