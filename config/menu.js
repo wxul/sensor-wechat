@@ -35,13 +35,18 @@ module.exports = {
             sub_button: [
                 {
                     type: 'click',
-                    name: '确定浇水',
+                    name: '浇浇花草',
                     key: 'take_water'
                 },
                 {
                     type: 'view',
                     name: '看看直播',
                     url: 'http://sensor.home.amayading.com/live'
+                },
+                {
+                    type: 'click',
+                    name: '听听电台',
+                    key: 'fm_list'
                 }
             ]
         }

@@ -1,6 +1,7 @@
 const weather = require('./utils/weather');
 const w_api = require('./net/he_weather');
 const whiteList = require('../config/white');
+const fm = require('./utils/fm');
 
 function parseWeather(location, openId, res) {
     w_api
@@ -135,6 +136,12 @@ module.exports = (req, res) => {
                                     Content: `当前用户:${openId} 木有权限`
                                 });
                             }
+                        } else if (xml.EventKey == 'fm_list') {
+                            res.success({
+                                ToUserName: openId,
+                                MsgType: 'text',
+                                Content: fm.format()
+                            });
                         }
                     }
                     break;
