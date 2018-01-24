@@ -488,14 +488,14 @@
                     if (heweather && heweather.length && heweather[0].status == 'ok') {
                         var wether = heweather[0];
                         parseAir(wether);
-                    } else {
-                        $('#my-alert-content').text(heweather[0].status);
-                        $('#my-alert').modal('open');
-                    }
 
-                    setTimeout(() => {
-                        bodyScroll = new IScroll('#body-wrapper');
-                    }, 0);
+                        setTimeout(() => {
+                            bodyScroll = new IScroll('#body-wrapper');
+                        }, 0);
+                    } else {
+                        // $('#my-alert-content').text(heweather[0].status);
+                        // $('#my-alert').modal('open');
+                    }
                 })
             }
 
