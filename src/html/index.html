@@ -379,6 +379,23 @@
             var hoursScroll = null;
             var bodyScroll = null;
 
+            var days = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+
+            function formatDay(d) {
+                var torr = new Date();
+                torr.setDate(torr.getDate() + 2);
+                var date = new Date(d);
+                var timeStr = `${('0'+(date.getMonth()+1)).slice(-2)}-${('0'+date.getDate()).slice(-2)}`;
+                torr = new Date(torr.getFullYear(), torr.getMonth(), torr.getDate(), 0, 0, 0, 0);
+                var dStr = '';
+                if (date < torr && date > new Date()) {
+                    dStr = ' 明天';
+                } else {
+                    dStr = ' ' + days[date.getDay()];
+                }
+                return timeStr + dStr;
+            }
+
             function parse(wether) {
                 $('#update').html(
                     `更新时间: ${wether.update.loc}`
@@ -409,7 +426,7 @@
                     '<div class="forecast-item f-item-head"><time>天气预报</time><div class="forecast-td">白天</div><div class="forecast-tn">夜间</div><div class="forecast-tmp">温度</div></div>';
                 forecast.forEach(f => {
                     forecast_html +=
-                        `<div class="forecast-item"><time>${f.date.substr(-5)}</time><div class="forecast-td"><img src="images/${f.cond_code_d}.png" /></div><div class="forecast-tn"><img src="images/${f.cond_code_n}.png" /></div><div class="forecast-tmp">${f.tmp_max}°/${f.tmp_min}°</div></div>`
+                        `<div class="forecast-item"><time>${formatDay(f.date)}</time><div class="forecast-td"><img src="images/${f.cond_code_d}.png" /></div><div class="forecast-tn"><img src="images/${f.cond_code_n}.png" /></div><div class="forecast-tmp">${f.tmp_max}°/${f.tmp_min}°</div></div>`
                 });
                 $('#forecast').html(forecast_html);
 
