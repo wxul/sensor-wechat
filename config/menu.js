@@ -18,11 +18,11 @@ module.exports = {
                     name: '天气预报',
                     url: 'http://wechat.amayading.com/weather'
                 },
-                {
-                    type: 'view',
-                    name: '卫星云图',
-                    url: 'http://wechat.amayading.com/cloud-picture2'
-                }
+                // {
+                //     type: 'view',
+                //     name: '卫星云图',
+                //     url: 'http://wechat.amayading.com/cloud-picture2'
+                // }
             ]
         },
         {
