@@ -10,7 +10,7 @@ var instance = axios.create({
 instance.interceptors.response.use(
     function(response) {
         // Do something with response data
-        console.log(response);
+        console.log(response.config, JSON.stringify(response.data));
         if (response.status === 200 && !response.data.errcode) {
             return response.data;
         } else {
