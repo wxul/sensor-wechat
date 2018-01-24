@@ -6,7 +6,7 @@ module.exports = {
         return axios.get(`/s6/weather`, { params: { location, key: he_key } });
     },
     getAir(location) {
-        return axios.get(`/s6/air/now`, { params: { location, key: he_key } });
+        return axios.get(`https://free-api.heweather.com/s6/air/now`, { params: { location, key: he_key } });
     },
     search(location){
         return axios.get(`/s6/search`, { params: { location, key: he_key } });
