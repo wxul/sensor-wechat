@@ -1,9 +1,9 @@
 const axios = require('axios');
 
-const { he_api } = require('../../config');
+const { he_api, he_api_free } = require('../../config');
 
 var instance = axios.create({
-    baseURL: he_api,
+    baseURL: he_api_free,
     timeout: 8000
 });
 
