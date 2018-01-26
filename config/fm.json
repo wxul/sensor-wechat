@@ -1,5 +1,4 @@
-[
-    {
+[{
         "name": "晓说2017",
         "url": "http://m.ximalaya.com/10936615/album/7651313",
         "type": ""
@@ -31,5 +30,10 @@
         "url": "http://www.fnn-news.com/",
         "type": "",
         "allow_users": ["orqNIs_Qa36tel35mbcPlBRt9hRw"]
+    },
+    {
+        "name": "36氪",
+        "url": "http://m.ximalaya.com/73880812/album/8125936",
+        "type": ""
     }
 ]
