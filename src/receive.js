@@ -2,6 +2,7 @@ const weather = require('./utils/weather');
 const w_api = require('./net/he_weather');
 const whiteList = require('../config/white');
 const fm = require('./utils/fm');
+const sensor = require('./net/sensor');
 
 function parseWeather(location, openId, res) {
     w_api
@@ -124,10 +125,11 @@ module.exports = (req, res) => {
                     } else {
                         if (xml.EventKey == 'take_water') {
                             if (whiteList.indexOf(openId) >= 0) {
+                                sensor.pump();
                                 res.success({
                                     ToUserName: openId,
                                     MsgType: 'text',
-                                    Content: `当前用户:${openId} 可以浇水 (TODO)`
+                                    Content: `已浇水`
                                 });
                             } else {
                                 res.success({
