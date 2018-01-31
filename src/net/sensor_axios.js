@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 var instance = axios.create({
-    baseURL: 'http://sensor.amayading.com/api/v1',
+    baseURL: 'http://sensor.home.amayading.com/api/v1',
     timeout: 8000
 });
 
